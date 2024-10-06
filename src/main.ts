@@ -9,9 +9,11 @@ const header = document.createElement("h1");
 header.innerHTML = gameName;
 app.append(header);
 
-//let clicks = 0; 
-const button = document.createElement("button"); 
-button.innerHTML = "Cookie! 😄"; 
-
-
-app.append(button); 
+let clicks = 0;
+const button = document.createElement("button");
+button.innerHTML = "Cookie! 😄";
+button.onclick = () => {
+    clicks++; 
+    button.innerHTML = `Cookie 😄 (${clicks})`; 
+}
+app.append(button);
