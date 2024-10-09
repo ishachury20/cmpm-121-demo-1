@@ -9,12 +9,28 @@ const header = document.createElement("h1");
 header.innerHTML = gameName;
 app.append(header);
 
+const description = document.createElement("p");
+description.innerHTML = "Click the cookies to earn points and upgrade your clicks!";
+description.style.fontStyle = "bold";
+description.style.marginTop = "-5px"; // Remove top margin to bring it closer to the header
+description.style.marginBottom = "30px"; // Optional spacing adjustment below
+app.append(description);
+
+const description2 = document.createElement("p");
+description2.innerHTML = "Growthrate!";
+description2.style.fontStyle = "italic";
+description2.style.marginTop = "-25px"; // Remove top margin to bring it closer to the header
+description2.style.marginBottom = "30px";
+app.append(description2);
+
 // Game state variables
-let clicks = 0;         // Total clicks (including auto-increment)
-let initial_clicks = 0;   // Manual clicks only (used to unlock upgrades)
-let lastTime = 0;       // Tracks the last frame time
-let clickIncrement = 0; // time for auto-increment
-let growthRate = 0;     
+let clicks = 0; 
+let lastTime = 0; 
+let clickIncrement = 0; 
+let growthRate = 0;
+let num_cakemix = 0; //Counter for each upgrade 
+let num_chococlatechip = 0; 
+let num_hotchocolate = 0; 
 
 // Create "Cookie" button
 const button = document.createElement("button");
@@ -27,35 +43,64 @@ upgrade.disabled = true; // Disabled until 10 manual clicks are reached
 
 // Style the upgrade button
 // Brace wrote this section of code
-upgrade.style.display = "block"; 
+upgrade.style.display = "block";
 upgrade.style.margin = "10px auto";
 upgrade.style.padding = "10px 20px";
 upgrade.style.fontSize = "16px";
 
-// Ensure app container is centered
+//second upgrade button 
+const second_upgrade = document.createElement("button");
+second_upgrade.innerHTML = "Purchase Chocolate Chips (100 clicks)";
+second_upgrade.disabled = true; // Disabled until 10 manual clicks are reached
+
+second_upgrade.style.display = "block";
+second_upgrade.style.margin = "10px auto";
+second_upgrade.style.padding = "10px 20px";
+second_upgrade.style.fontSize = "16px";
+second_upgrade.disabled = true; 
+
+const third_upgrade = document.createElement("button");
+third_upgrade.innerHTML = "Purchase Hot Chocolate (1000 clicks)";
+third_upgrade.disabled = true; // Disabled until 10 clicks are reached
+
+third_upgrade.style.display = "block";
+third_upgrade.style.margin = "10px auto";
+third_upgrade.style.padding = "10px 20px";
+third_upgrade.style.fontSize = "16px";
+third_upgrade.disabled = true; 
+
 app.style.display = "block";
 app.style.textAlign = "center";
+
 
 // Function to update the counter and manage auto-increment
 // Used Brace to write and understand this loop
 function updateCounter(currentTime: number) {
-  const timeElapsed = (currentTime - lastTime) / 1000; 
+  const timeElapsed = (currentTime - lastTime) / 1000;
   lastTime = currentTime;
 
   // Auto-increment clicks based on growth rate
   // Used Brace to write this section of code
   clickIncrement += timeElapsed * growthRate;
   if (clickIncrement >= 1) {
-    clicks += Math.floor(clickIncrement); 
-    clickIncrement %= 1;                  
-    button.innerHTML = `Cookie! 😄 (${clicks})`; 
+    clicks += Math.floor(clickIncrement);
+    clickIncrement %= 1;
+    button.innerHTML = `Cookie! 😄 (${clicks})`;
   }
 
   // Enable upgrade button when player has 10 manual clicks
   // Went to Bahar's office hours to understand the loop
-  if (initial_clicks >= 10) {
+  if (clicks >= 10) {
     upgrade.disabled = false;
   }
+  if (clicks >= 100){
+    second_upgrade.disabled = false; 
+  }
+  if (clicks >= 1000){
+    third_upgrade.disabled = false; 
+  }
+
+  description2.innerHTML = `Growth rate: ${growthRate} cookies per second`;
 
   requestAnimationFrame(updateCounter); // Continue the game loop
 }
@@ -63,34 +108,55 @@ function updateCounter(currentTime: number) {
 // Handle cookie button clicks
 button.onclick = () => {
   clicks += 1;
-  initial_clicks += 1; // Count manual clicks towards the upgrade unlock
   button.innerHTML = `Cookie! 😄 (${clicks})`;
-
-  // Check if the player has 10 manual clicks and enable the upgrade button
-  if (initial_clicks >= 10) {
-    upgrade.disabled = false;
-  }
 };
 
 // Handle upgrade purchase
-// Watched 
 upgrade.onclick = () => {
   if (clicks >= 10) {
-    clicks -= 10;        // Deduct 10 clicks for the upgrade
-    growthRate += 1;     // Increase growth rate by 1
-    upgrade.innerHTML = `Purchase Cake Mix (10 clicks, Growth Rate: ${growthRate})`; 
-    button.innerHTML = `Cookie! 😄 (${clicks})`; 
+    clicks -= 10; // Deduct 10 clicks for the upgrade
+    growthRate += 0.1; // Increase growth rate by 1
+    num_cakemix++; 
+    upgrade.innerHTML = `Purchase Cake Mix (10 clicks, Growth Rate: 0.1, ${num_cakemix} owned)`;
   }
 
-  // Disable the upgrade button if the player doesn't have enough clicks after purchasing
   if (clicks < 10) {
     upgrade.disabled = true;
+  }
+};
+
+// re-used first upgrade event listener for the second and third upgrades 
+second_upgrade.onclick = () => { 
+  if (clicks >= 100) {
+    clicks -= 100; // Deduct 100 clicks for the upgrade
+    growthRate += 2; // Increase growth rate by 1
+    num_chococlatechip++; 
+    second_upgrade.innerHTML = `Purchase Chocolate Chip (100 clicks, Growth Rate: 2, ${num_chococlatechip} owned)`;
+  }
+
+  if (clicks < 100) {
+    second_upgrade.disabled = true;
+  }
+};
+
+third_upgrade.onclick = () => {
+  if (clicks >= 1000) {
+    clicks -= 1000; // Deduct 100 clicks for the upgrade
+    growthRate += 50; // Increase growth rate by 1
+    num_hotchocolate++; 
+    third_upgrade.innerHTML = `Purchase Hot Chocolate (1000 clicks, Growth Rate: 50, ${num_hotchocolate} owned)`;
+  }
+
+  if (clicks < 1000) {
+    third_upgrade.disabled = true;
   }
 };
 
 // Add buttons to the DOM
 app.append(button);
 app.append(upgrade);
+app.append(second_upgrade); 
+app.append(third_upgrade); 
 
 // Start the game loop
 requestAnimationFrame(updateCounter);
