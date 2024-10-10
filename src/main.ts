@@ -2,7 +2,7 @@ import "./style.css";
 
 const app: HTMLDivElement = document.querySelector("#app")!;
 
-const gameName = "Knockoff Cookie Clicker 🍪";
+const gameName = "Blossom Quest 🌸";
 document.title = gameName;
 
 const header = document.createElement("h1");
@@ -10,41 +10,40 @@ header.innerHTML = gameName;
 app.append(header);
 
 const description = document.createElement("p");
-description.innerHTML =
-  "Click the cookies to earn points and upgrade your clicks!";
+description.innerHTML = "Click the buttons to earn flowers and upgrade your garden!";
 description.style.fontStyle = "bold";
 description.style.marginTop = "-5px"; // Remove top margin to bring it closer to the header
 description.style.marginBottom = "30px"; // Optional spacing adjustment below
 app.append(description);
 
 const description2 = document.createElement("p");
-description2.innerHTML = "Growthrate!";
+description2.innerHTML = "Plant Growth Rate!";
 description2.style.fontStyle = "italic";
 description2.style.marginTop = "-25px"; // Remove top margin to bring it closer to the header
 description2.style.marginBottom = "30px";
 app.append(description2);
 
 // Game state variables
-let clicks = 0;
+let flowers = 0;
 let lastTime = 0;
 let clickIncrement = 0;
 let growthRate = 0;
-let num_cakemix = 0; //Counter for each upgrade
-let num_chococlatechip = 0;
-let num_hotchocolate = 0;
+let num_shrubs = 0; 
+let num_vines = 0;
+let num_trees = 0;
 
-let purchase_cakemix = 10; 
-let purchase_chocolatechip = 100; 
-let purchase_hotchocolate = 1000; 
+let purchase_shrubs = 10; 
+let purchase_vines = 100; 
+let purchase_trees = 1000; 
 
-// Create "Cookie" button
+// Create flower button
 const button = document.createElement("button");
-button.innerHTML = "Cookie! 😄";
+button.innerHTML = "Plant Flowers";
 
-// Create "Cake Mix" upgrade button
+// Create shrub upgrade button
 const upgrade = document.createElement("button");
-upgrade.innerHTML = "Purchase Cookie Mix (10 clicks)";
-upgrade.disabled = true; // Disabled until 10 manual clicks are reached
+upgrade.innerHTML = "Plant Shrubs (10 flowers)";
+upgrade.disabled = true; // Disabled until 10 manual flowers are reached
 
 // Style the upgrade button
 // Brace wrote this section of code
@@ -53,10 +52,10 @@ upgrade.style.margin = "10px auto";
 upgrade.style.padding = "10px 20px";
 upgrade.style.fontSize = "16px";
 
-//second upgrade button
+//second upgrade button (vines)
 const second_upgrade = document.createElement("button");
-second_upgrade.innerHTML = "Purchase Chocolate Chips (100 clicks)";
-second_upgrade.disabled = true; // Disabled until 10 manual clicks are reached
+second_upgrade.innerHTML = "Plant Vines (100 flowers)";
+second_upgrade.disabled = true; // Disabled until 10 manual flowers are reached
 
 second_upgrade.style.display = "block";
 second_upgrade.style.margin = "10px auto";
@@ -64,9 +63,10 @@ second_upgrade.style.padding = "10px 20px";
 second_upgrade.style.fontSize = "16px";
 second_upgrade.disabled = true;
 
+// thrid upgrade button (trees)
 const third_upgrade = document.createElement("button");
-third_upgrade.innerHTML = "Purchase Hot Chocolate (1000 clicks)";
-third_upgrade.disabled = true; // Disabled until 10 clicks are reached
+third_upgrade.innerHTML = "Plant Trees (1000 flowers)";
+third_upgrade.disabled = true; // Disabled until 10 flowers are reached
 
 third_upgrade.style.display = "block";
 third_upgrade.style.margin = "10px auto";
@@ -83,78 +83,83 @@ function updateCounter(currentTime: number) {
   const timeElapsed = (currentTime - lastTime) / 1000;
   lastTime = currentTime;
 
-  // Auto-increment clicks based on growth rate
+  // Auto-increment flowers based on growth rate
   // Used Brace to write this section of code
   clickIncrement += timeElapsed * growthRate;
   if (clickIncrement >= 1) {
-    clicks += Math.floor(clickIncrement);
+    flowers += Math.floor(clickIncrement);
     clickIncrement %= 1;
-    button.innerHTML = `Cookie! 😄 (${clicks})`;
+    button.innerHTML = `Plant Flowers (${flowers})`;
   }
 
-  // Enable upgrade button when player has 10 manual clicks
+  // Enable upgrade button when player has 10 manual flowers
   // Went to Bahar's office hours to understand the loop
-  if (clicks >= purchase_cakemix) {
+  if (flowers >= purchase_shrubs) {
     upgrade.disabled = false;
   }
-  if (clicks >= purchase_chocolatechip) {
+  if (flowers >= purchase_vines) {
     second_upgrade.disabled = false;
   }
-  if (clicks >= purchase_hotchocolate) {
+  if (flowers >= purchase_trees) {
     third_upgrade.disabled = false;
   }
 
-  description2.innerHTML = `Growth rate: ${growthRate} cookies per second`;
+  description2.innerHTML = `Growth rate: ${growthRate.toFixed(0)} flowers per second`;
 
   requestAnimationFrame(updateCounter); // Continue the game loop
 }
 
-// Handle cookie button clicks
+// Handle cookie button flowers
 button.onclick = () => {
-  clicks += 1;
-  button.innerHTML = `Cookie! 😄 (${clicks})`;
+ flowers += 1;
+  button.innerHTML = `Plant Flowers (${flowers})`;
 };
 
 // Handle upgrade purchase
-upgrade.onclick = () => { //first upgrade (cake mix)
-  if (clicks >= 10) {
-    clicks -= 10; // Deduct 10 clicks for the upgrade
+upgrade.onclick = () => { //first upgrade (shrubs) 
+  if (flowers >= 10) {
+    flowers -= 10; // Deduct 10 flowers for the upgrade
+    console.log (flowers)
     growthRate += 0.1; // Increase growth rate by 1
-    num_cakemix++;
-    purchase_cakemix *= 1.15; 
-    upgrade.innerHTML = `Purchase Cake Mix (${purchase_cakemix.toFixed(2)} clicks, Growth Rate: 0.1, ${num_cakemix} owned)`;
+    num_shrubs++;
+    purchase_shrubs *= 1.15; 
+    upgrade.innerHTML = `Plant Shrubs (${purchase_shrubs.toFixed(0)} flowers, Growth Rate: 0.1, ${num_shrubs} planted)`;
+    button.innerHTML = `Plant Flowers (${flowers})`;
   }
 
-  if (clicks < purchase_cakemix) {
+  if (flowers < purchase_shrubs) {
     upgrade.disabled = true;
   }
 };
 
 // re-used first upgrade event listener for the second and third upgrades
-second_upgrade.onclick = () => { //second upgrade (chocolate chip)
-  if (clicks >= 100) {
-    clicks -= 100; // Deduct 100 clicks for the upgrade
+// used Brace to cut off excess decimal points 
+second_upgrade.onclick = () => { //second upgrade (vines)
+  if (flowers >= 100) {
+   flowers -= 100; // Deduct 100 flowers for the upgrade
     growthRate += 2; // Increase growth rate by 1
-    num_chococlatechip++;
-    purchase_chocolatechip *= 1.15; 
-    second_upgrade.innerHTML = `Purchase Chocolate Chip (${purchase_chocolatechip.toFixed(2)} clicks, Growth Rate: 2, ${num_chococlatechip} owned)`;
+    num_vines++;
+    purchase_vines *= 1.15; 
+    second_upgrade.innerHTML = `Plant Vines (${purchase_vines.toFixed(0)} flowers, Growth Rate: 2, ${num_vines} planted)`;
+    button.innerHTML = `Plant Flowers (${flowers})`;
   }
 
-  if (clicks < purchase_chocolatechip) {
+  if (flowers < purchase_vines) {
     second_upgrade.disabled = true;
   }
 };
 
 third_upgrade.onclick = () => {
-  if (clicks >= 1000) {
-    clicks -= 1000; // Deduct 100 clicks for the upgrade
+  if (flowers >= 1000) {
+    flowers -= 1000; // Deduct 100 flowers for the upgrade
     growthRate += 50; // Increase growth rate by 1
-    num_hotchocolate++;
-    purchase_hotchocolate *= 1.15; 
-    third_upgrade.innerHTML = `Purchase Hot Chocolate (${purchase_hotchocolate.toFixed(2)} clicks, Growth Rate: 50, ${num_hotchocolate} owned)`;
+    num_trees++;
+    purchase_trees *= 1.15; 
+    third_upgrade.innerHTML = `Plant Trees (${purchase_trees.toFixed(0)} flowers, Growth Rate: 50, ${num_trees} planted)`;
+    button.innerHTML = `Plant Flowers (${flowers})`;
   }
 
-  if (clicks < purchase_hotchocolate) {
+  if (flowers < purchase_trees) {
     third_upgrade.disabled = true;
   }
 };
