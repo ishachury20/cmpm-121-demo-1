@@ -10,7 +10,8 @@ header.innerHTML = gameName;
 app.append(header);
 
 const description = document.createElement("p");
-description.innerHTML = "Click the buttons to earn flowers and upgrade your garden!";
+description.innerHTML =
+  "Click the buttons to earn flowers and upgrade your garden!";
 description.style.fontStyle = "bold";
 description.style.marginTop = "-5px"; // Remove top margin to bring it closer to the header
 description.style.marginBottom = "30px"; // Optional spacing adjustment below
@@ -28,13 +29,13 @@ let flowers = 0;
 let lastTime = 0;
 let clickIncrement = 0;
 let growthRate = 0;
-let num_shrubs = 0; 
+let num_shrubs = 0;
 let num_vines = 0;
 let num_trees = 0;
 
-let purchase_shrubs = 10; 
-let purchase_vines = 100; 
-let purchase_trees = 1000; 
+let purchase_shrubs = 10;
+let purchase_vines = 100;
+let purchase_trees = 1000;
 
 // Create flower button
 const button = document.createElement("button");
@@ -104,25 +105,27 @@ function updateCounter(currentTime: number) {
     third_upgrade.disabled = false;
   }
 
-  description2.innerHTML = `Growth rate: ${growthRate.toFixed(0)} flowers per second`;
+  console.log("rate", growthRate); 
+  description2.innerHTML = `Growth rate: ${growthRate.toFixed(2)} flowers per second`;
 
   requestAnimationFrame(updateCounter); // Continue the game loop
 }
 
 // Handle cookie button flowers
 button.onclick = () => {
- flowers += 1;
+  flowers += 1;
   button.innerHTML = `Plant Flowers (${flowers})`;
 };
 
 // Handle upgrade purchase
-upgrade.onclick = () => { //first upgrade (shrubs) 
+upgrade.onclick = () => {
+  //first upgrade (shrubs)
   if (flowers >= 10) {
     flowers -= 10; // Deduct 10 flowers for the upgrade
-    console.log (flowers)
+    console.log(flowers);
     growthRate += 0.1; // Increase growth rate by 1
     num_shrubs++;
-    purchase_shrubs *= 1.15; 
+    purchase_shrubs *= 1.15;
     upgrade.innerHTML = `Plant Shrubs (${purchase_shrubs.toFixed(0)} flowers, Growth Rate: 0.1, ${num_shrubs} planted)`;
     button.innerHTML = `Plant Flowers (${flowers})`;
   }
@@ -133,13 +136,14 @@ upgrade.onclick = () => { //first upgrade (shrubs)
 };
 
 // re-used first upgrade event listener for the second and third upgrades
-// used Brace to cut off excess decimal points 
-second_upgrade.onclick = () => { //second upgrade (vines)
+// used Brace to cut off excess decimal points
+second_upgrade.onclick = () => {
+  //second upgrade (vines)
   if (flowers >= 100) {
-   flowers -= 100; // Deduct 100 flowers for the upgrade
+    flowers -= 100; // Deduct 100 flowers for the upgrade
     growthRate += 2; // Increase growth rate by 1
     num_vines++;
-    purchase_vines *= 1.15; 
+    purchase_vines *= 1.15;
     second_upgrade.innerHTML = `Plant Vines (${purchase_vines.toFixed(0)} flowers, Growth Rate: 2, ${num_vines} planted)`;
     button.innerHTML = `Plant Flowers (${flowers})`;
   }
@@ -154,7 +158,7 @@ third_upgrade.onclick = () => {
     flowers -= 1000; // Deduct 100 flowers for the upgrade
     growthRate += 50; // Increase growth rate by 1
     num_trees++;
-    purchase_trees *= 1.15; 
+    purchase_trees *= 1.15;
     third_upgrade.innerHTML = `Plant Trees (${purchase_trees.toFixed(0)} flowers, Growth Rate: 50, ${num_trees} planted)`;
     button.innerHTML = `Plant Flowers (${flowers})`;
   }
