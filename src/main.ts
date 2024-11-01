@@ -11,12 +11,13 @@ app.append(header);
 
 // this section of code (alongside similar blocks of formatting) are written by Brace
 const description = document.createElement("p");
-description.innerHTML = "Click the buttons to grow flowers and upgrade your garden!";
+description.innerHTML =
+  "Click the buttons to grow flowers and upgrade your garden!";
 description.classList.add("description");
 app.append(description);
 
 const description2 = document.createElement("p");
-description2.classList.add("description2"); 
+description2.classList.add("description2");
 app.append(description2);
 
 const image = document.createElement("img");
@@ -28,7 +29,7 @@ app.append(image);
 
 const button = document.createElement("button");
 button.innerHTML = "Plant Flowers";
-button.classList.add("button"); 
+button.classList.add("button");
 button.style.backgroundColor = "#edc566";
 app.append(button);
 
@@ -141,29 +142,44 @@ button.onclick = () => {
   button.innerHTML = `Plant Flowers (${flowers.toFixed(0)})`;
 };
 
-function updateCounter(currentTime: number) {
-  //every frame
+// finds the current time elapsed
+function calculateTimeElapsed(currentTime: number): number {
   const timeElapsed = (currentTime - lastTime) / 1000;
   lastTime = currentTime;
+  return timeElapsed;
+}
 
-  clickIncrement += timeElapsed * growthRate;
+// updates and implements the upgrades 
+function updateFlowerCounts(elapsedTime: number): void {
+  clickIncrement += elapsedTime * growthRate;
   if (clickIncrement >= 1) {
     flowers += Math.floor(clickIncrement);
     clickIncrement %= 1;
     button.innerHTML = `Plant Flowers (${flowers.toFixed(0)})`;
   }
+}
 
-  // code written by Brace for upgradebutton in this section
+function updateButtonStates(): void {
   availableItems.forEach((item, index) => {
     const upgradeButton = document.querySelector(
-      `#upgrade-${index}`,
+      `#upgrade-${index}`
     ) as HTMLButtonElement;
     upgradeButton.disabled = flowers < item.cost;
   });
+}
 
+function updateGrowthRateDisplay(): void {
   description2.innerHTML = `Plant ${growthRate.toFixed(0)} flower(s) per second`;
-  // description2.style.color = "#237a3e";
+}
 
+// split updateCounter into seperate helper functions
+function updateCounter(currentTime: number): void {
+  const elapsedTime = calculateTimeElapsed(currentTime);
+  
+  updateFlowerCounts(elapsedTime);
+  updateButtonStates();
+  updateGrowthRateDisplay();
+  
   requestAnimationFrame(updateCounter);
 }
 
