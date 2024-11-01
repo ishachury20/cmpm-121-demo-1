@@ -64,7 +64,7 @@ h1 {
 
 /* Brace helped create this section of code and explained it */
 .image {
-  width: 250px;
+  width: auto;
   height: auto;
   margin: 0px;
 }

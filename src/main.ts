@@ -5,6 +5,24 @@ const app: HTMLDivElement = document.querySelector("#app")!;
 const gameName = "Blossom Quest";
 document.title = gameName;
 
+app.style.width = "100vw"; // Full viewport width
+app.style.height = "calc(100vw * (768 / 1366))"; // Maintain the image's aspect ratio
+
+// Set up maximum dimensions to align with the image's original size
+app.style.maxWidth = "1366px";
+app.style.maxHeight = "768px";
+
+app.style.backgroundImage = "url('FlowerBackground.png')";
+app.style.backgroundSize = "contain";
+app.style.backgroundPosition = "center";
+app.style.backgroundRepeat = "no-repeat";
+app.style.margin = "0 auto";
+
+// Option 2: Cover the element entirely, cropping out parts if aspect ratio mismatches
+// app.style.backgroundSize = "cover";
+// app.style.backgroundPosition = "center";
+
+
 const header = document.createElement("h1");
 header.innerHTML = gameName;
 app.append(header);
@@ -20,11 +38,11 @@ const description2 = document.createElement("p");
 description2.classList.add("description2");
 app.append(description2);
 
-const image = document.createElement("img");
-image.src = "./src/Plants1.png";
-image.classList.add("image");
-image.style.margin = "0px";
-app.append(image);
+// const image = document.createElement("img");
+// image.src = "./src/Plants1.png";
+// image.classList.add("image");
+// image.style.margin = "0px";
+// app.append(image);
 
 const button = document.createElement("button");
 button.innerHTML = "Plant Flowers";
@@ -89,7 +107,7 @@ let growthRate = 0;
 let lastTime = 0;
 let clickIncrement = 0;
 const increment = 1.15;
-const button_margin = "5px"; 
+const button_margin = "5px";
 
 const nameToIndexMap: { [key: string]: number } = {};
 
