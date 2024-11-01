@@ -5,22 +5,17 @@ const app: HTMLDivElement = document.querySelector("#app")!;
 const gameName = "Blossom Quest";
 document.title = gameName;
 
-app.style.width = "100vw"; // Full viewport width
-app.style.height = "calc(100vw * (768 / 1366))"; // Maintain the image's aspect ratio
+// app.style.width = "100vw"; // Full viewport width
+// app.style.height = "calc(100vw * (768 / 1366))"; // Maintain the image's aspect ratio
+// app.style.maxWidth = "1366px";
+// app.style.maxHeight = "768px";
 
-// Set up maximum dimensions to align with the image's original size
-app.style.maxWidth = "1366px";
-app.style.maxHeight = "768px";
-
-app.style.backgroundImage = "url('FlowerBackground.png')";
-app.style.backgroundSize = "contain";
-app.style.backgroundPosition = "center";
-app.style.backgroundRepeat = "no-repeat";
-app.style.margin = "0 auto";
-
-// Option 2: Cover the element entirely, cropping out parts if aspect ratio mismatches
-// app.style.backgroundSize = "cover";
+// app.style.backgroundImage = "url('FlowerBackground.png')";
+// app.style.backgroundSize = "contain";
 // app.style.backgroundPosition = "center";
+// app.style.backgroundRepeat = "no-repeat";
+// app.style.margin = "0 auto";
+
 
 const header = document.createElement("h1");
 header.innerHTML = gameName;
