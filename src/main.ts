@@ -21,7 +21,6 @@ description2.classList.add("description2");
 app.append(description2);
 
 const image = document.createElement("img");
-
 image.src = "./src/Plants1.png";
 image.classList.add("image");
 image.style.margin = "0px";
@@ -31,7 +30,7 @@ const button = document.createElement("button");
 button.innerHTML = "Plant Flowers";
 button.classList.add("button");
 button.style.backgroundColor = "#edc566";
-app.append(button);
+app.append(button); 
 
 interface Item {
   name: string;
@@ -89,6 +88,8 @@ let flowers = 0;
 let growthRate = 0;
 let lastTime = 0;
 let clickIncrement = 0;
+const increment = 1.15; 
+const button_margin = "5px"; 
 
 const nameToIndexMap: { [key: string]: number } = {};
 
@@ -99,7 +100,7 @@ availableItems.forEach((item, index) => {
   const buttonContainer = document.createElement("div");
   buttonContainer.style.display = "flex";
   buttonContainer.style.alignItems = "center";
-  buttonContainer.style.marginBottom = "5 px";
+  buttonContainer.style.marginBottom = button_margin; 
 
   nameToIndexMap[item.name] = index; //0 = A, 1 = B, 2 = C
 
@@ -117,7 +118,7 @@ availableItems.forEach((item, index) => {
       growthRate += item.rate;
       item.purchased += 1;
 
-      availableItems[index].cost *= 1.15;
+      availableItems[index].cost *= increment;
       upgradeButton.innerHTML = `Plant ${item.name} (${availableItems[index].cost.toFixed(0)} flowers, Growth Rate: ${item.rate}, ${item.purchased} Planted)`;
       button.innerHTML = `Plant Flowers (${flowers.toFixed(0)})`;
     }
@@ -149,7 +150,7 @@ function calculateTimeElapsed(currentTime: number): number {
   return timeElapsed;
 }
 
-// updates and implements the upgrades 
+// updates and implements the upgrades
 function updateFlowerCounts(elapsedTime: number): void {
   clickIncrement += elapsedTime * growthRate;
   if (clickIncrement >= 1) {
@@ -162,7 +163,7 @@ function updateFlowerCounts(elapsedTime: number): void {
 function updateButtonStates(): void {
   availableItems.forEach((item, index) => {
     const upgradeButton = document.querySelector(
-      `#upgrade-${index}`
+      `#upgrade-${index}`,
     ) as HTMLButtonElement;
     upgradeButton.disabled = flowers < item.cost;
   });
@@ -175,11 +176,11 @@ function updateGrowthRateDisplay(): void {
 // split updateCounter into seperate helper functions
 function updateCounter(currentTime: number): void {
   const elapsedTime = calculateTimeElapsed(currentTime);
-  
+
   updateFlowerCounts(elapsedTime);
   updateButtonStates();
   updateGrowthRateDisplay();
-  
+
   requestAnimationFrame(updateCounter);
 }
 
