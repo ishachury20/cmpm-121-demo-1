@@ -62,14 +62,13 @@ h1 {
   color: #237a3e; /* Specific color for growth rate display */
 }
 
-/* For Image */
+/* Brace helped create this section of code and explained it */
 .image {
   width: 250px;
   height: auto;
   margin: 0px;
 }
 
-/* For Buttons */
 .button {
   margin: 5px;
   margin-bottom: 10px;
@@ -80,9 +79,6 @@ h1 {
   margin: 8px;
 }
 
-/* style.css */
-
-/* For Description Text */
 .description {
   font-style: bold;
   margin-top: -25px;
@@ -114,7 +110,6 @@ h1 {
 .upgrade-button {
   margin: 8px;
 }
-
 
 button {
   border-radius: 8px;

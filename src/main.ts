@@ -11,39 +11,24 @@ app.append(header);
 
 // this section of code (alongside similar blocks of formatting) are written by Brace
 const description = document.createElement("p");
-description.innerHTML =
-  "Click the buttons to grow flowers and upgrade your garden!";
-// description.style.fontStyle = "bold";
-// description.style.marginTop = "-25px"; // Remove top margin to bring it closer to the header
-// description.style.marginBottom = "10px"; // Optional spacing adjustment below
-description.style.color = "#2f914c";
+description.innerHTML = "Click the buttons to grow flowers and upgrade your garden!";
+description.classList.add("description");
 app.append(description);
 
 const description2 = document.createElement("p");
-//description2.innerHTML = "Plant Growth Rate!";
-// description2.style.fontStyle = "italic";
-// description2.style.marginTop = "-25px"; // Remove top margin to bring it closer to the header
-// description2.style.marginBottom = "10px";
-
+description2.classList.add("description2"); 
 app.append(description2);
 
 const image = document.createElement("img");
 
-// Set the source of the image
-image.src = "./src/Plants1.png"; 
-// image.style.width = "250px"; // Width can be set in pixels or percentage
-// image.style.height = "auto"; // Maintain the aspect ratio
-image.classList.add("image"); 
+image.src = "./src/Plants1.png";
+image.classList.add("image");
 image.style.margin = "0px";
-
 app.append(image);
 
 const button = document.createElement("button");
 button.innerHTML = "Plant Flowers";
 button.classList.add("button"); 
-// button.style.fontStyle = "bold";
-// button.style.margin = "5px"; // Remove top margin to bring it closer to the header
-// button.style.marginBottom = "10px";
 button.style.backgroundColor = "#edc566";
 app.append(button);
 
@@ -121,10 +106,8 @@ availableItems.forEach((item, index) => {
   upgradeButton.id = `upgrade-${index}`;
   upgradeButton.innerHTML = `Buy ${item.name} (${item.cost} flowers, Rate: ${item.rate})`;
 
-  upgradeButton.disabled = true; 
-  //upgradeButton.style.fontStyle = "bold";
-  upgradeButton.style.margin = "8px";
-  upgradeButton.classList.add("upgrade-button"); 
+  upgradeButton.disabled = true;
+  upgradeButton.classList.add("upgrade-button");
   upgradeButton.style.backgroundColor = availableItems[index].color;
 
   upgradeButton.onclick = () => {
@@ -139,7 +122,6 @@ availableItems.forEach((item, index) => {
     }
   };
 
-  //app.append(upgradeButton);
   const blurbButton = document.createElement("button");
   blurbButton.innerHTML = `More about ${item.name}`;
 
