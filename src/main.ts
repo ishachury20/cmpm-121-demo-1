@@ -30,7 +30,7 @@ const button = document.createElement("button");
 button.innerHTML = "Plant Flowers";
 button.classList.add("button");
 button.style.backgroundColor = "#edc566";
-app.append(button); 
+app.append(button);
 
 interface Item {
   name: string;
@@ -88,7 +88,7 @@ let flowers = 0;
 let growthRate = 0;
 let lastTime = 0;
 let clickIncrement = 0;
-const increment = 1.15; 
+const increment = 1.15;
 const button_margin = "5px"; 
 
 const nameToIndexMap: { [key: string]: number } = {};
@@ -100,7 +100,7 @@ availableItems.forEach((item, index) => {
   const buttonContainer = document.createElement("div");
   buttonContainer.style.display = "flex";
   buttonContainer.style.alignItems = "center";
-  buttonContainer.style.marginBottom = button_margin; 
+  buttonContainer.style.marginBottom = button_margin;
 
   nameToIndexMap[item.name] = index; //0 = A, 1 = B, 2 = C
 
