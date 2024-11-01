@@ -22,7 +22,6 @@ app.style.margin = "0 auto";
 // app.style.backgroundSize = "cover";
 // app.style.backgroundPosition = "center";
 
-
 const header = document.createElement("h1");
 header.innerHTML = gameName;
 app.append(header);

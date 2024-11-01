@@ -48,6 +48,12 @@ h1 {
   gap: 10px; /* Add spacing between elements */
 }
 
+.background {
+  background-image: url("/CMPM-121-DEMO-1/FlowerBackground.png");
+  background-size: cover;
+  height: 100vh;
+}
+
 .description {
   font-style: bold;
   margin-top: -25px;
