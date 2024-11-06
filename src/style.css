@@ -23,6 +23,8 @@ a:hover {
   color: #237a3e;
 }
 
+/* took inspiration from Cheristic's project to add a suitable background image */ 
+/* followed Cheristic's code to add the background */ 
 body {
   margin: 0;
   display: flex;
@@ -30,13 +32,12 @@ body {
   min-width: 320px;
   min-height: 100vh;
 
-  background-image: url("../src//FlowerBackground.png");
+  background-image: url("../src//FlowerBackground.png"); 
   background-size: 100% 100%;
   width: 100vw;
   height: 100vh;
   padding: 0;
   margin: 0;
-
 }
 
 h1 {
